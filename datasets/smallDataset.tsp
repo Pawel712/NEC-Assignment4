@@ -1,0 +1,14 @@
+NAME : att48
+COMMENT : 48 capitals of the US (Padberg/Rinaldi)
+TYPE : TSP
+DIMENSION : 48
+EDGE_WEIGHT_TYPE : ATT
+NODE_COORD_SECTION
+1  36.49  7.49
+2  57.06  9.51
+3  30.22  48.14
+4  5.15 -3.56
+5  34.59 -106.37
+6  57.12 -2.12
+7  16.45 -99.45
+EOF
