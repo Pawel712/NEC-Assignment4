@@ -57,7 +57,6 @@ def selectionFPS(population, fitnesses):
 
     # chooses two parents randomly. The higher the probability of a parent, the more likely it is to be chosen. 
     parent_indices = np.random.choice(len(population), size=2, replace=False, p=probabilities) 
-    print("parent_indices: ", parent_indices)
     selected_population = []
     for i in parent_indices: # switches to a list, is needed later in the program
         selected_population.append(population[i])
@@ -76,7 +75,8 @@ def selectionTS(population, fitnesses):
 
     return selected_population;
 
-def crossover(parent1, parent2):
+def OnePointcrossover(parent1, parent2):
+    
     cut = random.randint(1, len(parent1) - 2)
     child = []
 
@@ -86,13 +86,53 @@ def crossover(parent1, parent2):
     for city in parent2:
         if city not in child:
             child.append(city)
+    child.append(1) # adds the number 1 so the path leads to the starting city
+    return child
+
+def uniformCrossover(parent1, parent2):
+    
+    child = [None] * (len(parent1) - 1)      
+    child[0] = 1
+
+    # This for loop may skip some of the parent cities because parent1 may have added one element that exist already in parent2, one city can exist in a chromosome exactly once 
+    for i in range(1, len(parent1) - 1):
+        if random.random() < 0.5:
+            if parent1[i] not in child:
+                child[i] = parent1[i]
+        else:
+            if parent2[i] not in child:
+                child[i] = parent2[i]
+
+    remaining_cities = []
+    parentCities = parent1 + parent2
+
+    # find the cities that are in parent1 and parent2 but not in child
+    for city in parentCities:
+        if city not in child:
+            remaining_cities.append(city)
+
+    # Fill any remaining None with cities not yet in the child, this enables the child to have the same number of cities as parents
+    for i in range(1, len(parent1)-1):
+        if child[i] is None:
+            child[i] = remaining_cities.pop(0)
+
     child.append(1)
     return child
 
-def mutation(tour, mutation_rate):
+# Only one bit (city) is mutated
+def BitFlipMutation(tour, mutation_rate):
     if random.random() < mutation_rate:
         i, j = random.sample(range(1, len(tour) - 1), 2)
         tour[i], tour[j] = tour[j], tour[i]
+    return tour
+
+def scramblemMutation(tour, mutation_rate):
+    if random.random() < mutation_rate:
+        i, j = random.sample(range(1, len(tour) - 1), 2)
+        #print("original tour: ", tour)
+        tour[i:j] = random.sample(tour[i:j], len(tour[i:j])) # randomly swaps the position of the randomly selected indexes
+        #print("Index that are swaped: i: ", i,"j: ", j)
+        #print("mutated tour: ", tour)
     return tour
 
 def find_best(problem, population):
@@ -119,9 +159,9 @@ def genetic_algorithm(problem, population_size, generations, mutation_rate):
 
         new_population = [bestFromPrevious]
         for _ in range(population_size):
-            parent1, parent2 = selectionTS(population, fitnesses)
-            child = crossover(parent1, parent2)
-            child = mutation(child, mutation_rate)
+            parent1, parent2 = selectionFPS(population, fitnesses)
+            child = OnePointcrossover(parent1, parent2)
+            child = scramblemMutation(child, mutation_rate)
             new_population.append(child)
         population = new_population
 
@@ -140,7 +180,7 @@ def plot_evolution(best_distances):
     plt.grid()
     plt.show()
 
-file_path = 'datasets/dataset14.tsp'
+file_path = 'datasets/a280.tsp'
 problem = tsplib95.load(file_path)
 
 # population = how many solutions will be in a generation
