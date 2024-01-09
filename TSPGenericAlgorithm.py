@@ -48,14 +48,33 @@ def calculate_distance(problem, tour):
 def fitness(problem, tour):
     return 1 / calculate_distance(problem, tour)
 
-def selection(population, fitnesses):
+# fitnesses variable is a list that contains the fitness value/score of each tour, 
+# selectionFPS - fitness proportionate selection
+# The fitness of each individual relative to the population is used to assign a probability of selection. Think of this as the fitness-weighted probability of being selected.
+def selectionFPS(population, fitnesses):
     total_fitness = sum(fitnesses)
-    probabilities = [f / total_fitness for f in fitnesses]
-    parent_indices = np.random.choice(len(population), size=2, replace=False, p=probabilities)
+    probabilities = [f / total_fitness for f in fitnesses] # gets probabilties for each tour
+
+    # chooses two parents randomly. The higher the probability of a parent, the more likely it is to be chosen. 
+    parent_indices = np.random.choice(len(population), size=2, replace=False, p=probabilities) 
+    print("parent_indices: ", parent_indices)
     selected_population = []
-    for i in parent_indices:
+    for i in parent_indices: # switches to a list, is needed later in the program
         selected_population.append(population[i])
     return selected_population
+
+# selectionTS - tournament selection
+# A set number of individuals are randomly selected from the population and the one with the highest fitness in the group is chosen as the first parent. This is repeated to chose the second parent.
+def selectionTS(population, fitnesses):
+    selected_population = []
+
+    # selecting two parents from different randomly selected groups with the highest fitness score
+    for _ in range(2):
+        parent_indices = random.sample(range(len(population)), 4) # gets 4 random parent indices, needs indices to compare fitness
+        parent_indice_highest_fitness = max(parent_indices, key=lambda i: fitnesses[i])
+        selected_population.append(population[parent_indice_highest_fitness])
+
+    return selected_population;
 
 def crossover(parent1, parent2):
     cut = random.randint(1, len(parent1) - 2)
@@ -100,7 +119,7 @@ def genetic_algorithm(problem, population_size, generations, mutation_rate):
 
         new_population = [bestFromPrevious]
         for _ in range(population_size):
-            parent1, parent2 = selection(population, fitnesses)
+            parent1, parent2 = selectionTS(population, fitnesses)
             child = crossover(parent1, parent2)
             child = mutation(child, mutation_rate)
             new_population.append(child)
@@ -108,8 +127,6 @@ def genetic_algorithm(problem, population_size, generations, mutation_rate):
 
         current_best_distance = min(calculate_distance(problem, tour) for tour in population)
         best_distances.append(current_best_distance)
-
-        # print a simple progress bar
         
     best_tour = max(population, key=lambda tour: fitness(problem, tour))
     return best_tour, best_distances
