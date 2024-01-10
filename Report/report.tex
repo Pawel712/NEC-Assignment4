@@ -17,48 +17,90 @@
     \maketitle
     \tableofcontents
     \newpage
-    \section{1.}
-    Selection methods: \\
+    \section{Description of the chromosome, and adaptations done to the algorithm}
+    \subsection{Translation of the problem to chromosome}
+    Firstly the dataset is imported with help of tsplib95 library. A simple tsplib95.load() function is used to import the dataset and get proper structure of the problem so it can be handled by the genetic algorithm. The genetic algorithm has several stages and this stages are inspired from geeksforgeeks source \cite{TSPGeeksforgeeks}
     \begin{itemize}
-        \item Fitness proportionate selection 
-        \item Tournament selection
+        \item Initialization 
+        \item Fitness score calculation
+        \item Elitism 
+        \item Selection 
+        \item Crossover 
+        \item Mutation 
+        \item Population update 
     \end{itemize}
-    Crossover methods: \\
-    \begin{itemize}
-        \item One point crossover
-        \item Uniform crossover
-    \end{itemize}
-    Mutation methods: \\
-    \begin{itemize}
-        \item One bit flip mutation
-        \item Scramble mutation
-    \end{itemize}
-    Nästa gång:\\
-    Beskriva varje metod för selection/crossover/mutation med beskrivning och bild, blir enklare att förklare på redovisning\\
+    At the Initialization stage the original population is created with create$\_$initial$\_$population() function. The cities are extracted from the dataset and tours are created randomly. \\
     \\
-    Hitta källa varifrån jag har strukturen av genetic algorithm
+    Fitness score calculation is done with fitness() function where following fitness score calculation is done:\\
+    \\
+    $\frac{1}{calculate_distance()}$\\
+    \\
+    Function calculate$\_$distance() is basically calculating the total distance of a tour. Then if the distance is high the fitness score will get low and if the distance is low the fitness score will get high. Every tour is assigned one fitness score. \\
+    \\
+    The part where elitism is done, it's taken from this source \cite{Elitismsource}. Elitism is done with elitism() function. The best tour from the population is chosen and added to the new population. This way the best tour is always saved in the new population and the evolution is faster.\\
+    \\
+    Selection is choosing the parents for the mating part. Depending on the method the parents are choosen differently. Crossover section is creating the children from the chosen parents and depedning on the method the childrens inheritance of parents genetics is done. Mutation part has the responsibility to perform mutations on the children and as well mutation has different methods to perform mutations so the mutations can vary.\\
+    \\
+    To finish off the algorithm, all the parents creates a new child and at the end a new population has arrised and its selected to do the same mating process again depending on how many generations are specified.\\
+    \\
+    The different selection methods were taken from this source \cite{Elitismsource} and the different selection methods are listed below 
+    \subsection{Methods for selection/crossover/mutation}
+    Selection methods: \cite{Elitismsource}
+    \begin{itemize}
+        \item Fitness proportionate selection - parents are choosen randomly, but the parents with higher fitness score has higher chance of being selected
+        \item Tournament selection - 4 parents are choosen randomly from the set and the parent with highest fitness score and the second highest score is chosen to mate.
+    \end{itemize}
+    Crossover methods: \cite{CrossoverSource} 
+    \begin{itemize}
+        \item One point crossover - a randomly point is chosen on the tour and the tour is splitted in two parts. Visualization of one point crossover is shown in figure \ref{fig:OnePointCross}
+        \item Uniform crossover - each gene (city) is treated seperately instead of divided the parent in to one or more parts. Basically a flip-coin is done on every city if its included or not. Visualization of uniform crossover is shown in figure \ref{fig:uniformCrossover}
+    \end{itemize}
+    
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.7]{images/onePointCross.png}
+        \caption{One point cross}
+        \label{fig:OnePointCross}
+    \end{figure}
 
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.7]{images/uniformCross.png}
+        \caption{Uniform crossover}
+        \label{fig:uniformCrossover}
+    \end{figure}
+    \noindent Mutation methods: \cite{MutationSource}
+    \begin{itemize}
+        \item One bit flip mutation - only one bit is mutated which in this case means that one city is swapped with another random city from the same tour. Visualization of one bit mutation is shown in figure \ref{fig:OneBitMutation}
+        \item Scramble mutation - a random set of cities is chosen and swapped with another random set of cities. Visualization of scramble mutation is shown in figure \ref{fig:ScrambleMutation}
+    \end{itemize}
+
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.7]{images/oneBitMutation.png}
+        \caption{One bit mutation}
+        \label{fig:OneBitMutation}
+    \end{figure}
+    
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.7]{images/ScrambleMutation.png}
+        \caption{Scramble mutation}
+        \label{fig:ScrambleMutation}
+    \end{figure}
+    
     \newpage
     \section{2.}
     
-    %\bibliographystyle{plainurl} 
-	%\bibliography{ref} 
+    \bibliographystyle{plainurl} 
+	\bibliography{ref} 
+
+    % Nästa gång
+    % Explain how population size is chosen and how do I know that the system reaches stationary state.
+    % göra tester på datasets och dokumentera det.
+    % Beskriva vad jag har tagit data ifrån
 
     %%  Look into what lambda does in the code
-
-    % From this site: https://towardsdatascience.com/evolution-of-a-salesman-a-complete-genetic-algorithm-tutorial-for-python-6fe5d2b3ca35
-    % I got the idea how to plot the improvements in the algorithm
-
-    % From this site: https://towardsdatascience.com/evolution-of-a-salesman-a-complete-genetic-algorithm-tutorial-for-python-6fe5d2b3ca35
-    % I got the info about the different methods for selection
-
-    % From this site: https://www.tutorialspoint.com/genetic_algorithms/genetic_algorithms_mutation.htm
-    % I got the info about the different methods for mutation
-
-    % from this site: https://www.tutorialspoint.com/genetic_algorithms/genetic_algorithms_crossover.htm
-    % I got the info about the different methods for crossover
-
-
 
     % jag har tagit dataset a280.tsp burma14.tsp, ch150.tsp från:
     % http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp/
@@ -67,7 +109,6 @@
     % https://people.sc.fsu.edu/~jburkardt/datasets/tsp/tsp.html
     
     % smallDataset.tsp är en modifierad version av att48.tsp eftersom behövde ha en liten dataset för testning
-
 
 
 \end{document}
