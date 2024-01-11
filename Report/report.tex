@@ -89,26 +89,39 @@
         \label{fig:ScrambleMutation}
     \end{figure}
     
-    \newpage
+    \subsection{How the population size is chosen}
+    After doing coople of test with population size, the best and efficient results are obtained when the population size of the size of the dataset or little bit higher. Double, tripple or higher population size doesn't result in better path.
+
+    \subsection{How stationary state is identified}
+    One of the downloaded datasets have specified on the website the lowest distance possible. Dataset att48.tsp has lowest distance of 33523, according to the website \cite{att48Data}. To identify stationary state for the other datasets various tests were performed on the parameters: population size, number of generations, and mutation rate, and then checking the plot of evolution of the minimum total traveling distance. 
+
     \section{2.}
-    
+
+    \subsection{Description of the datasets}
+    \subsection{The results obtained with at least 6 different combinations of parameters
+    described in the previous section}
+
+    \begin{table}
+        \centering
+        \begin{tabular}{|c|c|c|c|c|c|c|}
+            \hline
+            Population size & Generations & Mutation & Selection & Cross & Mutation & Min Dist\\
+            \hline
+        \end{tabular}
+        \caption{Result dataset smallDataset.tsp}
+        \label{results}
+
+    \end{table}
+
     \bibliographystyle{plainurl} 
 	\bibliography{ref} 
 
     % Nästa gång
-    % Explain how population size is chosen and how do I know that the system reaches stationary state.
     % göra tester på datasets och dokumentera det.
     % Beskriva vad jag har tagit data ifrån
 
     %%  Look into what lambda does in the code
-
-    % jag har tagit dataset a280.tsp burma14.tsp, ch150.tsp från:
-    % http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/tsp/
-
-    % jag har tagit dataset att48.tsp från:
-    % https://people.sc.fsu.edu/~jburkardt/datasets/tsp/tsp.html
     
     % smallDataset.tsp är en modifierad version av att48.tsp eftersom behövde ha en liten dataset för testning
-
 
 \end{document}
