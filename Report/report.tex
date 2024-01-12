@@ -47,8 +47,8 @@
     \subsection{Methods for selection/crossover/mutation}
     Selection methods: \cite{Elitismsource}
     \begin{itemize}
-        \item Fitness proportionate selection - parents are choosen randomly, but the parents with higher fitness score has higher chance of being selected
-        \item Tournament selection - 4 parents are choosen randomly from the set and the parent with highest fitness score and the second highest score is chosen to mate.
+        \item Fitness proportionate selection (selectionFPS) - parents are choosen randomly, but the parents with higher fitness score has higher chance of being selected
+        \item Tournament selection (selectionTS) - 4 parents are choosen randomly from the set and the parent with highest fitness score and the second highest score is chosen to mate.
     \end{itemize}
     Crossover methods: \cite{CrossoverSource} 
     \begin{itemize}
@@ -95,23 +95,63 @@
     \subsection{How stationary state is identified}
     One of the downloaded datasets have specified on the website the lowest distance possible. Dataset att48.tsp has lowest distance of 33523, according to the website \cite{att48Data}. To identify stationary state for the other datasets various tests were performed on the parameters: population size, number of generations, and mutation rate, and then checking the plot of evolution of the minimum total traveling distance. 
 
-    \section{2.}
+    \section{The results of executing the code for 5 problems of different sizes}
 
     \subsection{Description of the datasets}
+    \textbf{smalldataset.tsp}\\
+    Dataset consisting of only seven cities. This dataset is a modified att48.tsp where couple of points from the bigger dataset were taken and then added to the smaller dataset. This was done because there were no dataset to download that had less than 10 cities.\\
+    \\
+    \textbf{burma14.tsp}\\
+    This dataset consist of 14 cities and was taken from this source \cite{DatasetSource}.\\
+    \\
+    \textbf{att48.tsp}\\
+    This dataset consists of 48 cities and was taken from this source \cite{att48Data}.\\
+    \\
+    \textbf{ch150.tsp}\\
+    Bigger dataset consisting of 150 cities and was taken from this source \cite{DatasetSource}.\\
+    \\
+    \textbf{a280.tsp}\\
+    The biggest dataset consisting of 280 cities and was taken from this source \cite{DatasetSource}. Executing the program with bigger cities than that results in very long execution time. 
     \subsection{The results obtained with at least 6 different combinations of parameters
     described in the previous section}
-
+    \textbf{smalldataset.tsp}\\
+    The result from trying out different parameters for smalldataset is shown in table \ref{resultsSmallDataset}. The best results and evolution of best tour are shown in figures \ref{PlotsSmallDataset}.
     \begin{table}
         \centering
         \begin{tabular}{|c|c|c|c|c|c|c|}
             \hline
-            Population size & Generations & Mutation & Selection & Cross & Mutation & Min Dist\\
+            Pop size & Gen & Mutation & Selection & Cross & Mutation & Min Dist\\
             \hline
-        \end{tabular}
+            20 & 100 & 0.1 & selectionFPS & OnePointcrossover & BitFlipMutation & 116 \\
+            \hline
+            40 & 100 & 0.2 & selectionFPS & OnePointcrossover & BitFlipMutation & 116 \\
+            \hline
+            40 & 10 & 0.1 & selectionFPS & OnePointcrossover & BitFlipMutation & 116 \\
+            \hline
+            40 & 100 & 0.2 & selectionTS & uniformCrossover & scramblemMutation & 116 \\
+            \hline
+            \end{tabular}
         \caption{Result dataset smallDataset.tsp}
-        \label{results}
-
+        \label{resultsSmallDataset}
     \end{table}
+    
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{.5\textwidth}
+			\centering
+			\includegraphics[width=.99\linewidth]{../Results/smallDataset/EvolutionPlot.png}
+			\caption{Evolution of best tour}
+			\label{EvolutionSmallDataset}
+		\end{subfigure}%
+		\begin{subfigure}{.5\textwidth}
+			\centering
+			\includegraphics[width=.8\linewidth]{../Results/smallDataset/bestTour.png}
+			\caption{Best tour}
+			\label{bestTourSmallDataset}
+		\end{subfigure}
+		\caption{Plots for small dataset}
+		\label{PlotsSmallDataset}
+	\end{figure}
 
     \bibliographystyle{plainurl} 
 	\bibliography{ref} 
