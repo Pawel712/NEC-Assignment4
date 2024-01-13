@@ -11,12 +11,14 @@
 
 \title{Assignment 4: \\ Optimization with Genetic Algorithms \\ Neuronal and evolutionary computing\\ 2023 - 2024}
 \author{Pawel Puzdrowski}
-\date{2024-01-XX}
+\date{2024-01-13}
 
 \begin{document}
     \maketitle
     \tableofcontents
     \newpage
+    \section{Git repository}
+    The repository that holds the code for this assignment can be found on this website: https://github.com/Pawel712/NEC-Assignment4.git
     \section{Description of the chromosome, and adaptations done to the algorithm}
     \subsection{Translation of the problem to chromosome}
     Firstly the dataset is imported with help of tsplib95 library. A simple tsplib95.load() function is used to import the dataset and get proper structure of the problem so it can be handled by the genetic algorithm. The genetic algorithm has several stages and this stages are inspired from geeksforgeeks source \cite{TSPGeeksforgeeks}
@@ -29,7 +31,7 @@
         \item Mutation 
         \item Population update 
     \end{itemize}
-    At the Initialization stage the original population is created with create$\_$initial$\_$population() function. The cities are extracted from the dataset and tours are created randomly. \\
+    At the initialization stage the original population is created with create$\_$initial$\_$population() function. The cities are extracted from the dataset and tours are created randomly. \\
     \\
     Fitness score calculation is done with fitness() function where following fitness score calculation is done:\\
     \\
@@ -93,7 +95,7 @@
     After doing coople of test with population size, the best and efficient results are obtained when the population size of the size of the dataset or little bit higher. Double, tripple or higher population size doesn't result in better path.
 
     \subsection{How stationary state is identified}
-    One of the downloaded datasets have specified on the website the lowest distance possible. Dataset att48.tsp has lowest distance of 33523, according to the website \cite{att48Data}. To identify stationary state for the other datasets various tests were performed on the parameters: population size, number of generations, and mutation rate, and then checking the plot of evolution of the minimum total traveling distance. 
+    To identify stationary state for the datasets various tests were performed on the parameters: population size, number of generations, and mutation rate, and then checking the plot of evolution of the minimum total traveling distance. 
 
     \section{The results of executing the code for 5 problems of different sizes}
 
@@ -112,10 +114,11 @@
     \\
     \textbf{a280.tsp}\\
     The biggest dataset consisting of 280 cities and was taken from this source \cite{DatasetSource}. Executing the program with bigger cities than that results in very long execution time. 
-    \subsection{The results obtained with at least 6 different combinations of parameters
-    described in the previous section}
+    \newpage
+    \subsection{The results obtained with at least 6 different combinations of parameters}
     \textbf{smalldataset.tsp}\\
-    The result from trying out different parameters for smalldataset is shown in table \ref{resultsSmallDataset}. The best results and evolution of best tour are shown in figures \ref{PlotsSmallDataset}.
+    \\
+    The result from trying out different parameters for smalldataset is shown in table \ref{resultsSmallDataset}. The best results and evolution of best tour are shown in figures \ref{PlotsSmallDataset}. Because this is a very small dataset, it doesn't need much adjusting parameters to reach the best tour.
     \begin{table}
         \centering
         \begin{tabular}{|c|c|c|c|c|c|c|}
@@ -152,16 +155,186 @@
 		\caption{Plots for small dataset}
 		\label{PlotsSmallDataset}
 	\end{figure}
+    \newpage
+    \noindent \textbf{burma14.tsp}\\
+    \\
+    The result from trying out different parameters for burma14.tsp is shown in table \ref{resultsBurma14}. The best results and evolution of best tour are shown in figures \ref{Plotsburma14}. 
+    \begin{table}
+        \centering
+        \begin{tabular}{|c|c|c|c|c|c|c|}
+            \hline
+            Pop size & Gen & Mutation & Selection & Cross & Mutation & Min Dist\\
+            \hline
+            40 & 10 & 0.1 & selectionFPS & OnePointcrossover & BitFlipMutation & 4814 \\
+            \hline
+            40 & 100 & 0.1 & selectionFPS & OnePointcrossover & BitFlipMutation & 4149 \\
+            \hline
+            40 & 100 & 0.2 & selectionFPS & OnePointcrossover & BitFlipMutation & 3642 \\
+            \hline
+            60 & 100 & 0.2 & selectionFPS & OnePointcrossover & BitFlipMutation & 3513 \\
+            \hline
+            60 & 200 & 0.2 & selectionFPS & OnePointcrossover & BitFlipMutation & 3346 \\
+            \hline
+            60 & 300 & 0.2 & selectionFPS & OnePointcrossover & BitFlipMutation & 3416 \\
+            \hline
+            60 & 200 & 0.2 & selectionTS & uniformCrossover & scramblemMutation & 3346 \\
+            \hline
+            \end{tabular}
+        \caption{Result dataset burma14.tsp}
+        \label{resultsBurma14}
+    \end{table}
 
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{.5\textwidth}
+			\centering
+			\includegraphics[width=.99\linewidth]{../Results/burma14/Evolution.png}
+			\caption{Evolution of best tour}
+			\label{Evolutionburma14}
+		\end{subfigure}%
+		\begin{subfigure}{.5\textwidth}
+			\centering
+			\includegraphics[width=.8\linewidth]{../Results/burma14/bestTour.png}
+			\caption{Best tour}
+			\label{bestTourburma14}
+		\end{subfigure}
+		\caption{Plots for burma14.tsp}
+		\label{Plotsburma14}
+	\end{figure}
+    \newpage
+    \noindent \textbf{att48.tsp}\\
+    \\
+    The result from trying out different parameters for att48.tsp is shown in table \ref{resultsatt48}. The best results and evolution of best tour are shown in figures \ref{Plotsatt48}.
+    \begin{table}
+        \centering
+        \begin{tabular}{|c|c|c|c|c|c|c|}
+            \hline
+            Pop size & Gen & Mutation & Selection & Cross & Mutation & Min Dist\\
+            \hline
+            60 & 100 & 0.2 & selectionFPS & OnePointcrossover & BitFlipMutation & 31623 \\
+            \hline
+            100 & 100 & 0.2 & selectionFPS & OnePointcrossover & BitFlipMutation & 32467 \\
+            \hline
+            100 & 200 & 0.2 & selectionFPS & OnePointcrossover & BitFlipMutation & 29300\\
+            \hline
+            100 & 300 & 0.1 & selectionFPS & OnePointcrossover & BitFlipMutation & 25441 \\
+            \hline
+            100 & 200 & 0.1 & selectionTS & uniformCrossover & scramblemMutation & 21004 \\
+            \hline
+            150 & 200 & 0.1 & selectionTS & uniformCrossover & scramblemMutation & 19408 \\
+            \hline
+            \end{tabular}
+        \caption{Result dataset att48.tsp}
+        \label{resultsatt48}
+    \end{table}
+
+    \begin{figure}[H]
+		\centering
+		\begin{subfigure}{.5\textwidth}
+			\centering
+			\includegraphics[width=.99\linewidth]{../Results/att48/Evolution.png}
+			\caption{Evolution of best tour}
+			\label{Evolutionatt48}
+		\end{subfigure}%
+		\begin{subfigure}{.5\textwidth}
+			\centering
+			\includegraphics[width=.8\linewidth]{../Results/att48/bestTour.png}
+			\caption{Best tour}
+			\label{bestTouratt48}
+		\end{subfigure}
+		\caption{Plots for att48.tsp}
+		\label{Plotsatt48}
+	\end{figure}
+    \newpage
+    \noindent \textbf{ch150.tsp}\\
+    \\
+    The result from trying out different parameters for ch150.tsp is shown in table \ref{resultsch150}. The best results and evolution of best tour are shown in figures \ref{Plotsch150}.
+    \begin{table}
+        \centering
+        \begin{tabular}{|c|c|c|c|c|c|c|}
+            \hline
+            Pop size & Gen & Mutation & Selection & Cross & Mutation & Min Dist\\
+            \hline
+            200 & 100 & 0.2 & selectionFPS & OnePointcrossover & BitFlipMutation & 45815 \\
+            \hline
+            200 & 100 & 0.1 & selectionFPS & OnePointcrossover & BitFlipMutation & 47187 \\
+            \hline
+            200 & 150 & 0.2 & selectionFPS & OnePointcrossover & BitFlipMutation & 45323 \\
+            \hline
+            200 & 150 & 0.2 & selectionTS & uniformCrossover & scramblemMutation & 25049 \\
+            \hline
+            200 & 300 & 0.2 & selectionTS & uniformCrossover & scramblemMutation & 19321\\
+            \hline
+            \end{tabular}
+        \caption{Result dataset ch150.tsp}
+        \label{resultsch150}
+    \end{table}
+    \begin{figure}[H]
+		\centering
+		\begin{subfigure}{.5\textwidth}
+			\centering
+			\includegraphics[width=.99\linewidth]{../Results/ch150/Evolution.png}
+			\caption{Evolution of best tour}
+			\label{Evolutionch150}
+		\end{subfigure}%
+		\begin{subfigure}{.5\textwidth}
+			\centering
+			\includegraphics[width=.8\linewidth]{../Results/ch150/bestTour.png}
+			\caption{Best tour}
+			\label{bestTourch150}
+		\end{subfigure}
+		\caption{Plots for ch150.tsp}
+		\label{Plotsch150}
+	\end{figure}
+    \newpage
+    \noindent \textbf{a280.tsp}\\
+    \\
+    The result from trying out different parameters for a280.tsp is shown in table \ref{resultsa280}. The best results and evolution of best tour are shown in figures \ref{Plotsa280}.
+    \begin{table}
+        \centering
+        \begin{tabular}{|c|c|c|c|c|c|c|}
+            \hline
+            Pop size & Gen & Mutation & Selection & Cross & Mutation & Min Dist\\
+            \hline
+            300 & 100 & 0.2 & selectionFPS & OnePointcrossover & BitFlipMutation & 29223 \\
+            \hline
+            300 & 100 & 0.1 & selectionFPS & OnePointcrossover & BitFlipMutation & 30058 \\
+            \hline
+            300 & 150 & 0.2 & selectionFPS & OnePointcrossover & BitFlipMutation & 28584 \\
+            \hline
+            300 & 150 & 0.2 & selectionTS & uniformCrossover & scramblemMutation & 20839 \\
+            \hline
+            300 & 250 & 0.2 & selectionTS & uniformCrossover & scramblemMutation & 15619 \\
+            \hline
+            \end{tabular}
+        \caption{Result dataset a280.tsp}
+        \label{resultsa280}
+    \end{table}
+    \begin{figure}[H]
+		\centering
+		\begin{subfigure}{.5\textwidth}
+			\centering
+			\includegraphics[width=.99\linewidth]{../Results/a280/Evolution.png}
+			\caption{Evolution of best tour}
+			\label{Evolutiona280}
+		\end{subfigure}%
+		\begin{subfigure}{.5\textwidth}
+			\centering
+			\includegraphics[width=.8\linewidth]{../Results/a280/bestTour.png}
+			\caption{Best tour}
+			\label{bestToura280}
+		\end{subfigure}
+		\caption{Plots for a280.tsp}
+		\label{Plotsa280}
+	\end{figure}
     \bibliographystyle{plainurl} 
 	\bibliography{ref} 
 
-    % Nästa gång
+    % Nästa gång:
     % göra tester på datasets och dokumentera det.
-    % Beskriva vad jag har tagit data ifrån
 
+    %% Remember to include the git repo in the report. 
     %%  Look into what lambda does in the code
-    
-    % smallDataset.tsp är en modifierad version av att48.tsp eftersom behövde ha en liten dataset för testning
+
 
 \end{document}
